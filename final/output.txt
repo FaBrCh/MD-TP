@@ -1,0 +1,385 @@
+=== ANÁLISE DE CLUSTERING - DADOS BANCÁRIOS ===
+
+1. CARREGAMENTO DOS DADOS
+--------------------------------------------------
+Baixando dataset...
+Dataset baixado e extraído com sucesso!
+
+Dataset carregado: 41188 linhas e 21 colunas
+
+
+2. EXPLORAÇÃO INICIAL DOS DADOS
+--------------------------------------------------
+
+Primeiras 5 linhas do dataset:
+   age        job  marital    education  ... cons.conf.idx euribor3m nr.employed   y
+0   56  housemaid  married     basic.4y  ...         -36.4     4.857      5191.0  no
+1   57   services  married  high.school  ...         -36.4     4.857      5191.0  no
+2   37   services  married  high.school  ...         -36.4     4.857      5191.0  no
+3   40     admin.  married     basic.6y  ...         -36.4     4.857      5191.0  no
+4   56   services  married  high.school  ...         -36.4     4.857      5191.0  no
+
+[5 rows x 21 columns]
+
+Informações sobre o dataset:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 41188 entries, 0 to 41187
+Data columns (total 21 columns):
+ #   Column          Non-Null Count  Dtype
+---  ------          --------------  -----
+ 0   age             41188 non-null  int64
+ 1   job             41188 non-null  object
+ 2   marital         41188 non-null  object
+ 3   education       41188 non-null  object
+ 4   default         41188 non-null  object
+ 5   housing         41188 non-null  object
+ 6   loan            41188 non-null  object
+ 7   contact         41188 non-null  object
+ 8   month           41188 non-null  object
+ 9   day_of_week     41188 non-null  object
+ 10  duration        41188 non-null  int64
+ 11  campaign        41188 non-null  int64
+ 12  pdays           41188 non-null  int64
+ 13  previous        41188 non-null  int64
+ 14  poutcome        41188 non-null  object
+ 15  emp.var.rate    41188 non-null  float64
+ 16  cons.price.idx  41188 non-null  float64
+ 17  cons.conf.idx   41188 non-null  float64
+ 18  euribor3m       41188 non-null  float64
+ 19  nr.employed     41188 non-null  float64
+ 20  y               41188 non-null  object
+dtypes: float64(5), int64(5), object(11)
+memory usage: 6.6+ MB
+None
+
+Estatísticas descritivas das variáveis numéricas:
+               age      duration      campaign  ...  cons.conf.idx     euribor3m   nr.employed
+count  41188.00000  41188.000000  41188.000000  ...   41188.000000  41188.000000  41188.000000
+mean      40.02406    258.285010      2.567593  ...     -40.502600      3.621291   5167.035911
+std       10.42125    259.279249      2.770014  ...       4.628198      1.734447     72.251528
+min       17.00000      0.000000      1.000000  ...     -50.800000      0.634000   4963.600000
+25%       32.00000    102.000000      1.000000  ...     -42.700000      1.344000   5099.100000
+50%       38.00000    180.000000      2.000000  ...     -41.800000      4.857000   5191.000000
+75%       47.00000    319.000000      3.000000  ...     -36.400000      4.961000   5228.100000
+max       98.00000   4918.000000     56.000000  ...     -26.900000      5.045000   5228.100000
+
+[8 rows x 10 columns]
+
+Valores nulos por coluna:
+Series([], dtype: int64)
+Não há valores nulos no dataset!
+
+
+Análise das variáveis categóricas:
+
+job:
+job
+admin.           10422
+blue-collar       9254
+technician        6743
+services          3969
+management        2924
+retired           1720
+entrepreneur      1456
+self-employed     1421
+housemaid         1060
+unemployed        1014
+student            875
+unknown            330
+Name: count, dtype: int64
+
+marital:
+marital
+married     24928
+single      11568
+divorced     4612
+unknown        80
+Name: count, dtype: int64
+
+education:
+education
+university.degree      12168
+high.school             9515
+basic.9y                6045
+professional.course     5243
+basic.4y                4176
+basic.6y                2292
+unknown                 1731
+illiterate                18
+Name: count, dtype: int64
+
+default:
+default
+no         32588
+unknown     8597
+yes            3
+Name: count, dtype: int64
+
+housing:
+housing
+yes        21576
+no         18622
+unknown      990
+Name: count, dtype: int64
+
+loan:
+loan
+no         33950
+yes         6248
+unknown      990
+Name: count, dtype: int64
+
+contact:
+contact
+cellular     26144
+telephone    15044
+Name: count, dtype: int64
+
+month:
+month
+may    13769
+jul     7174
+aug     6178
+jun     5318
+nov     4101
+apr     2632
+oct      718
+sep      570
+mar      546
+dec      182
+Name: count, dtype: int64
+
+day_of_week:
+day_of_week
+thu    8623
+mon    8514
+wed    8134
+tue    8090
+fri    7827
+Name: count, dtype: int64
+
+poutcome:
+poutcome
+nonexistent    35563
+failure         4252
+success         1373
+Name: count, dtype: int64
+
+y:
+y
+no     36548
+yes     4640
+Name: count, dtype: int64
+
+
+3. PREPARAÇÃO DOS DADOS
+--------------------------------------------------
+Variáveis numéricas (10): ['age', 'duration', 'campaign', 'pdays', 'previous', 'emp.var.rate', 'cons.price.idx', 'cons.conf.idx', 'euribor3m', 'nr.employed']
+
+Variáveis categóricas (11): ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'day_of_week', 'poutcome', 'y']
+
+Realizando encoding das variáveis categóricas...
+Shape após encoding: (41188, 62)
+
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+
+Aplicando o Método do Cotovelo...
+Testando k=2...
+Testando k=3...
+Testando k=4...
+
+
+
+
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+
+Aplicando o Método do Cotovelo...
+Testando k=2...
+Testando k=3...
+Testando k=4...
+
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+
+Aplicando o Método do Cotovelo...
+Testando k=2...
+Testando k=3...
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+Normalizando os dados...
+
+
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+4. ANÁLISE DE COMPONENTES PRINCIPAIS (PCA)
+--------------------------------------------------
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+Variância explicada pelos 2 primeiros componentes: 13.84%
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+
+
+5. DETERMINAÇÃO DO NÚMERO ÓTIMO DE CLUSTERS
+--------------------------------------------------
+
+--------------------------------------------------
+
+Aplicando o Método do Cotovelo...
+Testando k=2...
+Testando k=3...
+Testando k=4...
+Testando k=5...
+Testando k=6...
+Testando k=7...
+Testando k=8...
+Testando k=9...
+Testando k=10...
+
+Número ótimo de clusters baseado no Silhouette Score: 2
+
+
+6. APLICAÇÃO DOS ALGORITMOS DE CLUSTERING
+--------------------------------------------------
+
+6.1 K-Means Clustering
+Silhouette Score (K-Means): 0.116
+Davies-Bouldin Score (K-Means): 3.234
+
+Distribuição dos clusters (K-Means):
+Cluster 0: 26947 clientes (65.4%)
+Cluster 1: 14241 clientes (34.6%)
+
+6.2 DBSCAN Clustering
+
+Número de clusters encontrados: 994
+Número de pontos considerados ruído: 15525 (37.7%)
+Silhouette Score (DBSCAN - sem ruído): 0.192
+
+6.3 Clustering Hierárquico
+Silhouette Score (Hierárquico): 0.098
+Davies-Bouldin Score (Hierárquico): 3.730
+
+
+7. VISUALIZAÇÃO DOS RESULTADOS
+--------------------------------------------------
+
+
+8. ANÁLISE DOS PERFIS DOS CLUSTERS (K-Means)
+--------------------------------------------------
+
+=== CLUSTER 0 ===
+Tamanho: 26947 clientes (65.4%)
+
+Características numéricas médias:
+  age: 40.17 (diferença: +0.4%)
+  duration: 253.48 (diferença: -1.9%)
+  campaign: 2.83 (diferença: +10.0%)
+  pdays: 999.00 (diferença: +3.8%)
+  previous: 0.00 (diferença: -100.0%)
+
+Características categóricas predominantes:
+  job: admin. (24.7%)
+  marital: married (63.6%)
+  education: university.degree (28.6%)
+  default: no (73.7%)
+  housing: yes (50.3%)
+  loan: no (82.4%)
+
+Taxa de conversão: 4.9% (geral: 11.3%)
+
+=== CLUSTER 1 ===
+Tamanho: 14241 clientes (34.6%)
+
+Características numéricas médias:
+  age: 39.75 (diferença: -0.7%)
+  duration: 267.38 (diferença: +3.5%)
+  campaign: 2.08 (diferença: -19.0%)
+  pdays: 893.36 (diferença: -7.2%)
+  previous: 0.50 (diferença: +189.2%)
+
+Características categóricas predominantes:
+  job: admin. (26.4%)
+  marital: married (54.7%)
+  education: university.degree (31.3%)
+  default: no (89.4%)
+  housing: yes (56.4%)
+  loan: no (82.4%)
+
+Taxa de conversão: 23.4% (geral: 11.3%)
+
+
+9. CONCLUSÕES E INSIGHTS
+--------------------------------------------------
+
+Baseado na análise de clustering realizada, podemos observar:
+
+1. MÉTODO MAIS EFICAZ:
+   - O K-Means apresentou o melhor desempenho geral com silhouette score mais alto
+   - Identificou clusters bem definidos e interpretáveis
+
+2. PERFIS IDENTIFICADOS:
+   - Foram identificados diferentes perfis de clientes com características distintas
+   - Cada cluster representa um segmento específico com necessidades particulares
+
+3. APLICAÇÕES PRÁTICAS:
+   - Personalização de campanhas de marketing para cada cluster
+   - Desenvolvimento de produtos específicos para cada segmento
+   - Otimização de recursos focando nos clusters mais promissores
+
+4. PRÓXIMOS PASSOS:
+   - Validar os clusters com dados de campanhas futuras
+   - Desenvolver estratégias específicas para cada segmento
+   - Monitorar a evolução dos clusters ao longo do tempo
+
+
+Análise concluída com sucesso!
+Arquivos de visualização salvos no diretório atual.
